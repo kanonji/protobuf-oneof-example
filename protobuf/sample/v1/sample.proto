@@ -1,0 +1,35 @@
+syntax = "proto3";
+
+package sample.v1;
+option go_package = "protobuf-oneof/backend/gen/sample/v1;sample_v1";
+
+message CreateFile {
+  string path = 1;
+  string upload_id = 2;
+  string etag = 3;
+  uint32 sort = 4;
+}
+
+message UpdateFile {
+  int64 id = 1;
+  uint32 sort = 2;
+}
+
+message DeleteFile {
+  int64 id = 1;
+}
+
+message FileOperation {
+  oneof operation {
+    CreateFile create = 1;
+    UpdateFile update = 2;
+    DeleteFile delete = 3;
+  }
+}
+
+message Request {
+  int64 entity_id = 1;
+  string name = 2;
+  string description = 3;
+  repeated FileOperation files = 4;
+}
